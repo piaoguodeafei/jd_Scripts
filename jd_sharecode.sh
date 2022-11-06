@@ -22,7 +22,7 @@ dir_code=$dir_log/miantj_jd_Scripts_jd_sharecode
 [[ -d $dir_root/config ]] && dir_config=$dir_data/config
 [[ -d $dir_data/scripts ]] && dir_scripts=$dir_data/scripts
 [[ -d $dir_data/log ]] && dir_log=$dir_data/log
-[[ -d `echo /ql/data/log/miantj_jd_Scripts_jd_sharecode_*` ]] && dir_code=$dir_log/miantj_jd_Scripts_jd_sharecode_*
+[[ -d `echo /ql/data/log/miantj_jd_Scripts_jd_sharecode_*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/miantj_jd_Scripts_jd_sharecode_*|awk '{print $1}'|head -1`
 
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
@@ -100,8 +100,8 @@ env_name=(
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
-  #JDJOY_SHARECODES
-  #JDZZ_SHARECODES
+  JDJOY_SHARECODES
+  JDZZ_SHARECODES
   JXNC_SHARECODES
   #BOOKSHOP_SHARECODES
   #JD_CASH_SHARECODES
@@ -110,7 +110,7 @@ env_name=(
   JDHEALTH_SHARECODES
   #JD818_SHARECODES
   #CITY_SHARECODES
-#   MONEYTREE_SHARECODES
+  MONEYTREE_SHARECODES
 )
 var_name=(
   ForOtherFruit
@@ -118,8 +118,8 @@ var_name=(
   ForOtherBean
   ForOtherDreamFactory
   ForOtherJdFactory
-  #ForOtherJoy
-  #ForOtherJdzz
+  ForOtherJoy
+  ForOtherJdzz
   ForOtherJxnc
   #ForOtherBookShop
   #ForOtherCash
@@ -140,8 +140,8 @@ name_js=(
   "$repo"_jd_plantBean
   "$repo"_jd_dreamFactory
   "$repo"_jd_jdfactory
-  #"$repo"_jd_crazy_joy
-  #"$repo"_jd_jdzz
+  "$repo"_jd_crazy_joy
+  "$repo"_jd_jdzz
   "$repo"_jd_jxnc
   #"$repo"_jd_bookshop
   #"$repo"_jd_cash
@@ -151,7 +151,7 @@ name_js=(
   #"$repo"_jd_carnivalcity
   #"$repo"_jd_city
   "$repo"_jd_moneyTree_he?p
-  #"$repo"_jd_cfd
+  "$repo"_jd_cfd
 )
 
 name_config=(
@@ -160,8 +160,8 @@ name_config=(
   Bean
   DreamFactory
   JdFactory
-  #Joy
-  #Jdzz
+  Joy
+  Jdzz
   Jxnc
   #BookShop
   #Cash
@@ -171,7 +171,7 @@ name_config=(
   #Carni
   #City
   MoneyTree
-  #TokenJxnc
+  TokenJxnc
 )
 
 name_chinese=(
@@ -180,8 +180,8 @@ name_chinese=(
   京东种豆得豆
   京喜工厂
   东东工厂
-  #crazyJoy任务
-  #京东赚赚
+  crazyJoy任务
+  京东赚赚
   京喜农场
   #口袋书店
   #签到领现金
@@ -191,7 +191,7 @@ name_chinese=(
   #京东手机狂欢城
   #城城领现金
   摇钱树
-  #京喜token
+  京喜token
 )
 
 # 定义 json 数据查询工具
@@ -718,6 +718,7 @@ kill_proc(){
 
 ## 执行并写入日志
 #kill_proc "code.sh" "grep|$$" >/dev/null 2>&1
+#echo $dir_code
 latest_log=$(ls -r $dir_code | head -1)
 latest_log_path="$dir_code/$latest_log"
 ps_num="$(ps | grep code.sh | grep -v grep | wc -l)"

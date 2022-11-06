@@ -919,7 +919,7 @@ async function sendNotify(text, desp, params = {}, author = "\n\n本通知 By Ly
             ddBotNotify(text, desp), //钉钉机器人
             qywxBotNotify(text, desp), //企业微信机器人
             qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
-            fsBotNotify(text, params),   //飞书机器人
+            fsBotNotify(text, desp),   //飞书机器人
             iGotNotify(text, desp, params), //iGot
             gobotNotify(text, desp), //go-cqhttp
             gotifyNotify(text, desp), //gotify
@@ -991,9 +991,11 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
         var UseDay = Math.ceil((DateToday.getTime() - DateCreated.getTime()) / 86400000);
         var LogoutDay = 30 - Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000);
         if (LogoutDay < 1) {
-            strReturn = "\n【登录信息】已服务" + UseDay + "天(账号即将到期，请重登续期)"
+            strReturn = "\n【登录信息】已服务" + UseDay + "天"
+            // strReturn = "\n【登录信息】已服务" + UseDay + "天(账号即将到期，请重登续期)"
         } else {
-            strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
+            strReturn = "\n【登录信息】已服务" + UseDay + "天"
+            // strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
         }
 
     }
